@@ -97,7 +97,7 @@ npm test
 1. Clone the repository:
    ```bash
    git clone https://github.com/nokonoko1203/0002_study.git
-   cd 0002_study/stac-mcp
+   cd stac-mcp
    ```
 
 2. Build the Docker image:
