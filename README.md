@@ -63,29 +63,71 @@ npm test
 
 ## Usage with Claude Code
 
-### Option 1: Docker (Recommended)
+### Option 1: Using GHCR.io Pre-built Image
 
-1. Build the Docker image:
+1. Pull the Docker image:
    ```bash
-   docker build -t stac-mcp .
+   docker pull ghcr.io/nokonoko1203/stac-mcp:latest
    ```
 
-2. Add to your Claude Code MCP configuration (`~/.config/claude/claude_desktop_config.json`):
+2. Add to your Claude Code MCP configuration:
    ```json
    {
      "mcpServers": {
-        "stac_mcp": {
-          "command": "docker",
-          "args": ["run", "-i", "--rm", "-e", "STAC_API_URL", "stac-mcp"],
-          "env": {
-            "STAC_API_URL": "https://earth-search.aws.element84.com/v1"
-          }
-        }
+       "stac_mcp": {
+         "command": "docker",
+         "args": [
+           "run",
+           "-i",
+           "--rm",
+           "-e",
+           "STAC_API_URL",
+           "ghcr.io/nokonoko1203/stac-mcp:latest"
+         ],
+         "env": {
+           "STAC_API_URL": "https://earth-search.aws.element84.com/v1"
+         }
+       }
      }
    }
    ```
 
-### Option 2: Node.js Direct
+### Option 2: Self Build
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/nokonoko1203/0002_study.git
+   cd 0002_study/stac-mcp
+   ```
+
+2. Build the Docker image:
+   ```bash
+   docker build -t stac-mcp .
+   ```
+
+3. Add to your Claude Code MCP configuration:
+   ```json
+   {
+     "mcpServers": {
+       "stac_mcp": {
+         "command": "docker",
+         "args": [
+           "run",
+           "-i",
+           "--rm",
+           "-e",
+           "STAC_API_URL",
+           "stac-mcp"
+         ],
+         "env": {
+           "STAC_API_URL": "https://earth-search.aws.element84.com/v1"
+         }
+       }
+     }
+   }
+   ```
+
+### Option 3: Node.js Direct
 
 1. Build the server:
    ```bash
@@ -98,7 +140,7 @@ npm test
      "mcpServers": {
        "stac_mcp": {
          "command": "node",
-         "args": ["/absolute/path/to/stac-mcp/mcp/dist/index.js"],
+         "args": ["/absolute/path/to/stac-mcp/dist/index.js"],
          "env": {
            "STAC_API_URL": "https://earth-search.aws.element84.com/v1"
          }
