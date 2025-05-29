@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  stac-mcp:
+    image: ghcr.io/nokonoko1203/0002_study/stac-mcp:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - STAC_API_URL=${STAC_API_URL:-https://planetarycomputer.microsoft.com/api/stac/v1}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "process.exit(0)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
